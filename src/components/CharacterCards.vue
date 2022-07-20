@@ -4,6 +4,7 @@ import orderBy from "lodash/orderby";
 
 // import { useFetchAllCharacters } from "../composables/useFetchAllCharacters";
 import { useFetchResource } from "../composables/useFetchResource";
+import { useGlobalEvent } from "../composables/useGlobalEvent";
 
 // getting characters
 const {
