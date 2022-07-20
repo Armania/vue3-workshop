@@ -1,3 +1,47 @@
+<script>
+import axios from "axios";
+import { ref } from "vue";
+import orderBy from "lodash/orderby";
+export default {
+  setup() {
+    const characters = ref([]);
+    const loadingState = ref(null);
+    const orderKey = ref("id");
+
+    const fetchAllCharacters = () => {
+      loadingState.value = "loading";
+      axios
+        .get("https://rickandmortyapi.com/api/character")
+        .then((response) => {
+          setTimeout(() => {
+            loadingState.value = "success";
+            characters.value = response.data.results;
+          }, 1000);
+        });
+    };
+
+    return { characters, loadingState, orderKey, fetchAllCharacters };
+  },
+  data() {/*
+    return {
+      orderKey: "id",
+    };*/
+  },
+  computed: {
+    charactersOrdered() {
+      return orderBy(this.characters, this.orderKey);
+    },
+  },
+  methods: {
+    setOrderKey(key) {
+      this.orderKey = key;
+    },
+  },
+  created() {
+    this.fetchAllCharacters();
+  },
+};
+</script>
 <template>
   <div>
     <div class="border-b-2 pb-4 border-gray-300 text-center">
@@ -39,49 +83,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import axios from "axios";
-import { ref } from "vue";
-import orderBy from "lodash/orderby";
-export default {
-  setup() {
-    const characters = ref([]);
-    const loadingState = ref(null);
-    const orderKey = ref('id');
-    function fetchAllCharacters() {
-      this.loadingState = "loading";
-      axios
-        .get("https://rickandmortyapi.com/api/character")
-        .then((response) => {
-          setTimeout(() => {
-            this.loadingState = "success";
-            this.characters = response.data.results;
-          }, 1000);
-        });
-    }
-    return { characters, loadingState, orderKey, fetchAllCharacters };
-  },
-  data() {/*
-    return {
-      orderKey: "id",
-    };*/
-  },
-  computed: {
-    charactersOrdered() {
-      return orderBy(this.characters, this.orderKey);
-    },
-  },
-  methods: {
-    setOrderKey(key) {
-      this.orderKey = key;
-    },
-  },
-  created() {
-    this.fetchAllCharacters();
-  },
-};
-</script>
 
 <style scoped>
 .btn {
