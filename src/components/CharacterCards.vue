@@ -2,13 +2,24 @@
 import { ref, computed } from "vue";
 import orderBy from "lodash/orderby";
 
-import { useFetchAllCharacters } from "../composables/useFetchAllCharacters";
+// import { useFetchAllCharacters } from "../composables/useFetchAllCharacters";
+import { useFetchResource } from "../composables/useFetchResource";
 
 // getting characters
-const { characters, loadingState, fetchAllCharacters } =
-  useFetchAllCharacters();
-
+const {
+  data: characters,
+  loadingState,
+  fetchResource: fetchAllCharacters
+} = useFetchResource("https://rickandmortyapi.com/api/character");
 fetchAllCharacters();
+
+// Fetching Locations
+const {
+  data: locations,
+  loadingState: loadingLocations,
+  fetchResource: fetchLocations,
+} = useFetchResource("https://rickandmortyapi.com/api/location");
+fetchLocations();
 
 // sorting of characters
 const orderKey = ref("id");
