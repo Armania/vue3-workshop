@@ -6,6 +6,11 @@ import orderBy from "lodash/orderby";
 import { useFetchResource } from "../composables/useFetchResource";
 import { useGlobalEvent } from "../composables/useGlobalEvent";
 
+useGlobalEvent("keypress", () => {
+  console.log("key pressed");
+  // characters.value.shift();
+});
+
 // getting characters
 const {
   data: characters,
